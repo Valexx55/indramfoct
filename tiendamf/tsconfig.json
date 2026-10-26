@@ -1,8 +1,18 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "core": [
+        "dist/core"
+      ],
+      "models": [
+        "dist/models"
+      ],
+      "shared": [
+        "dist/shared"
+      ]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
