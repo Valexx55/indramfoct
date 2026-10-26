@@ -9,7 +9,7 @@ const routes: Routes = [
     {path: '**', redirectTo: ''}//cargar la págian de inicio del shell app componente
   
 ];
-
+//VOLVEMOS EN 10 Mins - 13:10 aprox
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
