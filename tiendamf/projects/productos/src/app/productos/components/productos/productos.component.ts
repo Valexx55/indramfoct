@@ -22,6 +22,7 @@ export class ProductosComponent implements OnInit {
   agregarAlCarrito(p:Producto)
   {
     console.log(`Producto cargado ${p}`);
+    console.log("Producto cargado", p);
   }
 
 
