@@ -7,12 +7,26 @@
             <th>Precio</th>
 
         </thead>
-        <tbody *ngIf="carrito&&carrito.length>0; else carritoVacio">
+        <!--modelo de suscripción clásico-->
+        <!-- <tbody *ngIf="carrito&&carrito.length>0; else carritoVacio">
             <tr *ngFor="let item of carrito; trackBy: trackById">
                 <td>{{item.nombre}}</td>
                 <td>{{item.cantidad}}</td>
                 <td>{{item.precio | currency:'EUR'}}</td>
 
+            </tr>
+        </tbody> -->
+
+         <!--modelo de suscripción reactivo $ lista consumida automáticamente-->
+         <tbody>
+            <tr *ngFor="let p of (productos$ | async); trackBy: trackById">
+                <td>{{p.nombre}}</td>
+                <td>{{p.cantidad}}</td>
+                <td>{{p.precio | currency:'EUR'}}</td>
+
+            </tr>
+            <tr *ngIf="(productos$ | async)?.length ===0">
+                <td colspan="3" class="text-center">Tu carrito está vacío</td>
             </tr>
         </tbody>
         <ng-template #carritoVacio>
