@@ -1,8 +1,10 @@
+import { eliminarProducto } from './../../../../../../core/src/lib/state/cart.actions';
 import { Component, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
-import { CommunicationService } from '@core-lib';
+import { CommunicationService, selectProductos } from '@core-lib';
 import { ProductoEvent } from '@models';
 import { map, Observable, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-carrito',
@@ -10,9 +12,10 @@ import { map, Observable, Subscription } from 'rxjs';
   styleUrls: ['./carrito.component.css'],
 })
 export class CarritoComponent implements OnInit, OnDestroy {
+  
   carritoService = inject(CarritoService);
-
   communicationService = inject(CommunicationService);
+  store:Store = inject(Store);
 
   carrito: any[] = [];
   total = 0;
@@ -24,6 +27,9 @@ export class CarritoComponent implements OnInit, OnDestroy {
   //y para mostrar la lista actualizada en la plantilla, usamos |async
   productos$ = this.communicationService.producto$;
   total$!:Observable<number>;
+
+  productosNgRx$:Observable<ProductoEvent[]> = this.store.select(selectProductos);
+  
 
   ngOnInit(): void {
     this.cargarCarrito();
@@ -81,5 +87,10 @@ export class CarritoComponent implements OnInit, OnDestroy {
   avisoRecarga(event: BeforeUnloadEvent)
   {
     event.preventDefault();
+  }
+
+  borrarProducto (id:number)
+  {
+    this.communicationService.eliminarProducto(id);
   }
 }

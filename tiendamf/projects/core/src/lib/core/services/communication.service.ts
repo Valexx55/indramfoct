@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { agregarProducto, eliminarProducto } from '@core-lib';
 import { ProductoEvent } from '@models';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 
 
@@ -21,6 +23,9 @@ productoAddedSubject: BehaviorSubject<ProductoEvent[]>;
 
 //lista mutable/reactiva de productos
 producto$:Observable<ProductoEvent[]>;
+
+//inyectamos el Store
+store:Store = inject(Store);
 
   constructor() {
 
@@ -61,6 +66,10 @@ producto$:Observable<ProductoEvent[]>;
       this.productoAddedSubject.next([...listaActual, {...productoEvent,cantidad:1}]);
     }
     this.persistir();//guardo los cambios en memoria secundaria
+
+    //lanzamos la acción
+    this.store.dispatch(agregarProducto({producto:productoEvent}));
+
    }
 
    persistir ()
@@ -72,6 +81,22 @@ producto$:Observable<ProductoEvent[]>;
    {
     localStorage.removeItem(STORAGE_KEY);//vació la memoria del navegador
     this.productoAddedSubject.next([]);//vacío la ram
+   }
+
+  
+
+   eliminarProducto(id:number)
+   {
+    //actualizamos BHS rxjs
+    let listaActual = this.productoAddedSubject.value;
+    let nuevaLista = listaActual.filter(p=> p.id !== id);
+    this.productoAddedSubject.next(nuevaLista);
+
+    //localstorage
+    this.persistir();
+
+    //actualizar el Store NGRX
+    this.store.dispatch(eliminarProducto({id}));
    }
 
 }
