@@ -40,6 +40,7 @@
         </ng-template>
     </table>
     <div class="carrito-total">
+        <strong>TOTAL RX </strong> {{total$ | async | currency:'EUR'}}
         <strong>TOTAL </strong> {{total | currency:'EUR'}}
     </div>
     <button (click)="vaciarCarrito()" >Vaciar carrito</button>

@@ -48,4 +48,10 @@ producto$:Observable<ProductoEvent[]>;
     }
 
    }
+
+   vaciarProductos()
+   {
+    this.productoAddedSubject.next([]);
+   }
+
 }
