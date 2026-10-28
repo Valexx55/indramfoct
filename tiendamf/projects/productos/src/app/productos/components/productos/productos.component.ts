@@ -17,9 +17,19 @@ export class ProductosComponent implements OnInit {
 
   productos: Producto[] = [];
 
+  //TODO: Mejora listar las imágenes obtenidas en el listado de productos
+
  ngOnInit(): void {
   //versión local
-    this.productos = this.productoService.getProductos();
+   // this.productos = this.productoService.getProductos();
+   //versión remota
+   this.productoService.getProductos().subscribe({
+    next: (data:Producto[]) => this.productos = data,
+    error: (err) => console.error('Error al cargar productos ', err),
+    complete() {
+      console.log('Compunicación completada');
+    }
+   })
   }
 
   agregarAlCarrito(p:Producto)

@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Producto } from '../models/producto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +14,20 @@ export class ProductosService {
     {id:3, nombre:'Ratón', precio:20},
   ]
 
-  constructor() { }
+
+    private apiUrl = 'https://fakestoreapi.com/products';
+
+  constructor(private httpClient:HttpClient) { }
 
   //versión local
-  getProductos ()
+ /* getProductos ()
   {
     return this.productos;
+  }*/
+
+  //versión remota
+  getProductos():Observable<Producto[]>
+  {
+    return this.httpClient.get<Producto[]>(this.apiUrl);
   }
 }
