@@ -1,7 +1,7 @@
 import { eliminarProducto } from './../../../../../../core/src/lib/state/cart.actions';
 import { Component, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
-import { CommunicationService, selectProductos } from '@core-lib';
+import { CommunicationService, selectImporteTotal, selectProductos, selectTotalImporteDerivado, selectTotalProductos } from '@core-lib';
 import { ProductoEvent } from '@models';
 import { map, Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -29,6 +29,9 @@ export class CarritoComponent implements OnInit, OnDestroy {
   total$!:Observable<number>;
 
   productosNgRx$:Observable<ProductoEvent[]> = this.store.select(selectProductos);
+  totalProductosNgRx$:Observable<number> = this.store.select(selectTotalProductos);
+  totalImporteDerivadoNgRx$:Observable<number> = this.store.select(selectTotalImporteDerivado);
+  importeTotalNgRx$:Observable<number> = this.store.select(selectImporteTotal);
   
 
   ngOnInit(): void {

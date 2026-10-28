@@ -1,5 +1,7 @@
 <div class="carrito-container">
     <h2>Carrito de la compra</h2>
+
+    <h3>ESTADO RXJS</h3>
     <table>
         <thead>
             <th>Productos</th>
@@ -54,5 +56,9 @@
             <button (click)="borrarProducto(px.id)">eliminar producto </button>
         </li>
     </ul>
-    <!-- //TODO: total RX NGRX -->
+    <div class="carrito-total">
+        <strong>TOTAL prods RX </strong> {{totalProductosNgRx$ | async }}
+        <strong>TOTAL importe RX </strong> {{importeTotalNgRx$ | async | currency:'EUR'}}
+        <strong>TOTAL importe RX Derivado </strong> {{totalImporteDerivadoNgRx$ | async | currency:'EUR'}}
+    </div>
 </div>

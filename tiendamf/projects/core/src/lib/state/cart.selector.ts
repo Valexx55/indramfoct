@@ -8,7 +8,38 @@ export const selectCartState = createFeatureSelector<CartState>('carrito');//est
 
 export const selectProductos = createSelector(
     selectCartState, //el slice/dominio de nuestro proceso
-    (state)=> state.productos //los datos que yo extraigo de ese dominio/ consulta
+    (state)=> {
+        console.log(" en selectProductos");
+       return state.productos;
+     } //los datos que yo extraigo de ese dominio/ consulta
 )
 
-//TODO: CREAR SELECTORES PARA EL TOTAL DE PRODCUTOS Y EL IMPORTE TOTAL
+//SOLUCIÓN DAVID
+
+export const selectTotalProductos = createSelector(
+    selectCartState,
+    (state) => {
+         console.log(" en selectTotalProductos");
+        return state.productos.reduce((total, producto) => total + (producto.cantidad || 1), 0);
+    }
+);
+
+export const selectImporteTotal = createSelector(
+    selectCartState,
+    (state) => {
+        console.log(" en selectImporteTotal");
+        return state.productos.reduce((total, producto) => total + (producto.cantidad || 1) * (producto.precio || 0), 0);
+    }
+);
+
+//BENJA: Al ser el total un dato derivado del selector de productos, es más óptimo calcularlo a partir de él
+export const selectTotalImporteDerivado = createSelector(
+  selectProductos,
+  productos => {
+    console.log(" en selectTotalImporteDerivado");
+    return productos.reduce(
+    (total, p) => total + p.precio * (p.cantidad || 1),
+    0
+  )
+}
+);
