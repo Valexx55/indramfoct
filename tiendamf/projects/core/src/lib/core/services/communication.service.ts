@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { agregarProducto, eliminarProducto } from '@core-lib';
+import { agregarProducto, eliminarProducto, vaciarCarrito } from '@core-lib';
 import { ProductoEvent } from '@models';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
@@ -81,6 +81,7 @@ store:Store = inject(Store);
    {
     localStorage.removeItem(STORAGE_KEY);//vació la memoria del navegador
     this.productoAddedSubject.next([]);//vacío la ram
+    this.store.dispatch(vaciarCarrito())
    }
 
   
