@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
 import { CommunicationService } from '@core-lib';
 import { ProductoEvent } from '@models';
@@ -18,7 +18,6 @@ export class CarritoComponent implements OnInit, OnDestroy {
   total = 0;
   sub!: Subscription;
 
-//TODO: Haced que el importe total se muestre en el componente de carrito de forma actualizada 
 
   //ya no me tengo que suscribir
   //ya no me tengo que desuscribir
@@ -74,5 +73,13 @@ export class CarritoComponent implements OnInit, OnDestroy {
   trackById(_index:number, item:any):number
   {
     return item.id;
+  }
+//Forma nueva de escuchar/reaccionar a eventos https://angular.dev/guide/components/host-elements
+    //Cuando el usuario recarga la ventana del navegador, F5, se ejecuta está función a modo de aviso
+  //que le da la opción de confirmar el refresco o cancelarlo
+  @HostListener('window:beforeunload', ['$event'])
+  avisoRecarga(event: BeforeUnloadEvent)
+  {
+    event.preventDefault();
   }
 }

@@ -3,6 +3,7 @@ import { ProductoEvent } from '@models';
 import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 
 
+const STORAGE_KEY = "carrito_productos";
 /** Este es el servicio que va a coumnicar las MicroApps de Carrito y Producto */
 @Injectable({
   providedIn: 'root'
@@ -23,9 +24,22 @@ producto$:Observable<ProductoEvent[]>;
 
   constructor() {
 
+    let listaProductosInicial = CommunicationService.recuperarProductos();
+
     console.log("Instanciando CommunicationService ", Math.random());
-    this.productoAddedSubject=new BehaviorSubject<ProductoEvent[]>([]);
+    //this.productoAddedSubject=new BehaviorSubject<ProductoEvent[]>([]);
+    this.productoAddedSubject=new BehaviorSubject<ProductoEvent[]>(listaProductosInicial);
     this.producto$ = this.productoAddedSubject.asObservable();
+   }
+
+   static recuperarProductos ():ProductoEvent[]{
+      let inicial : ProductoEvent[] = [];
+
+      //si usara sessionStorage se guardarían temporalmente los datos en la misma PESTAÑA
+        let guardado = localStorage.getItem(STORAGE_KEY);
+        inicial = guardado ? JSON.parse(guardado) : [];
+
+      return inicial;
    }
 
    emitirProductoAdded (productoEvent:ProductoEvent)
@@ -46,12 +60,18 @@ producto$:Observable<ProductoEvent[]>;
       //creamos un array nuevo, añadiendo el producto elegido
       this.productoAddedSubject.next([...listaActual, {...productoEvent,cantidad:1}]);
     }
+    this.persistir();//guardo los cambios en memoria secundaria
+   }
 
+   persistir ()
+   {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(this.productoAddedSubject.value));
    }
 
    vaciarProductos()
    {
-    this.productoAddedSubject.next([]);
+    localStorage.removeItem(STORAGE_KEY);//vació la memoria del navegador
+    this.productoAddedSubject.next([]);//vacío la ram
    }
 
 }
