@@ -10,7 +10,7 @@
 </ul>
  -->
 
- <div class="productos-container" *ngIf="productos.length>0; else sinProductos">
+ <div class="productos-grid" *ngIf="productos.length>0; else sinProductos">
     <app-producto-card *ngFor="let p of productos" [producto]="p" (agregar)="agregarAlCarrito($event)">
 
     </app-producto-card>

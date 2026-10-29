@@ -19,8 +19,8 @@
             </tr>
         </tbody> -->
 
-         <!--modelo de suscripción reactivo $ lista consumida automáticamente-->
-         <tbody>
+        <!--modelo de suscripción reactivo $ lista consumida automáticamente-->
+        <tbody>
             <tr *ngFor="let p of (productos$ | async); trackBy: trackById">
                 <td>{{p.nombre}}</td>
                 <td>{{p.cantidad}}</td>
@@ -46,13 +46,13 @@
         <strong>TOTAL RX </strong> {{total$ | async | currency:'EUR'}}
         <strong>TOTAL </strong> {{total | currency:'EUR'}}
     </div>
-    <button (click)="vaciarCarrito()" >Vaciar carrito</button>
+    <button (click)="vaciarCarrito()">Vaciar carrito</button>
 
 
     <h3>ESTADO NGRX</h3>
     <ul>
         <li *ngFor="let px of (productosNgRx$ | async)">
-            {{px.nombre}} (x {{px.cantidad}}) 
+            {{px.nombre}} (x {{px.cantidad}})
             <button (click)="borrarProducto(px.id)">eliminar producto </button>
         </li>
     </ul>
@@ -61,4 +61,8 @@
         <strong>TOTAL importe RX </strong> {{importeTotalNgRx$ | async | currency:'EUR'}}
         <strong>TOTAL importe RX Derivado </strong> {{totalImporteDerivadoNgRx$ | async | currency:'EUR'}}
     </div>
+
+    <button (click)="probarMemorizacion()">
+        Probar memorización
+    </button>
 </div>

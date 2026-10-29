@@ -9,3 +9,9 @@ import { createAction, props } from "@ngrx/store";
 export const agregarProducto = createAction('[Carrito] Agregar Producto', props<{producto:ProductoEvent}>());
 export const eliminarProducto = createAction('[Carrito] Eliminar Producto', props<{id:number}>());
 export const vaciarCarrito = createAction('[Carrito] Vaciar Carrito');
+
+//experimento
+export const cambiarObservaciones = createAction(
+    '[Carrito] Cambiar Observaciones',
+    props<{observaciones: string}>()
+);

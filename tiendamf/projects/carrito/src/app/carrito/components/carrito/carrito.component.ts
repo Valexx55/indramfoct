@@ -1,7 +1,7 @@
 import { eliminarProducto } from './../../../../../../core/src/lib/state/cart.actions';
 import { Component, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
-import { CommunicationService, selectImporteTotal, selectProductos, selectTotalImporteDerivado, selectTotalProductos } from '@core-lib';
+import { CommunicationService, selectImporteTotal, selectProductos, selectTotalImporteDerivado, selectTotalProductos, cambiarObservaciones } from '@core-lib';
 import { ProductoEvent } from '@models';
 import { map, Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -96,4 +96,13 @@ export class CarritoComponent implements OnInit, OnDestroy {
   {
     this.communicationService.eliminarProducto(id);
   }
+
+  //"memoización" => guardar el valor de una función
+  probarMemorizacion() {
+  this.store.dispatch(
+    cambiarObservaciones({
+      observaciones: 'Prueba ' + Date.now()
+    })
+  );
+}
 }
