@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { cartReducer } from '@core-lib';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { HeaderComponent } from '@shared-lib';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       trace: false,
       autoPause: true
     }),
+    HeaderComponent//importamos el componente para poder usarlo dentro de este MF
   ],
   providers: [],
   bootstrap: [AppComponent]
