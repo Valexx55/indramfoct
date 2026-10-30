@@ -2,10 +2,15 @@ const { shareAll, withModuleFederationPlugin } = require('@angular-architects/mo
 
 module.exports = withModuleFederationPlugin({
 
+  // remotes: {
+  //   "carrito": "http://localhost:4201/remoteEntry.js",
+  //   "productos": "http://localhost:4203/remoteEntry.js",
+  //   "perfil": "http://localhost:4202/remoteEntry.js",    
+  // },
   remotes: {
-    "carrito": "http://localhost:4201/remoteEntry.js",
-    "productos": "http://localhost:4203/remoteEntry.js",
-    "perfil": "http://localhost:4202/remoteEntry.js",    
+    "carrito": "/carrito/remoteEntry.js",
+    "productos": "/productos/remoteEntry.js",
+    "perfil": "/perfil/remoteEntry.js",    
   },
 
   shared: {
